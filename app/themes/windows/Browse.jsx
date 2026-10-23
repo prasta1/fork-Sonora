@@ -785,7 +785,9 @@ export default function Browse({
   const openResult = (item) => {
     if (!scope?.hzone || isPlayableLeaf(item) || !item.is_container) return
     onDone?.()
-    navigate([...stack, { id: item.id, title: item.title, service: scope.id, item: item.id,
+    // The library has no service id (its scope carries 0): a node that claimed
+    // it was taken for a removed service and sent back to the root.
+    navigate([...stack, { id: item.id, title: item.title, service: scope.library ? undefined : scope.id, item: item.id,
                           hzone: scope.hzone, hh: scope.hh, account: scope.account, gen: scope.gen,
                           icon: scope.icon, kind: item.item_type, displayType: item.display_type || '', canPlay: item.can_play,
                           uri: item.uri, metadata: item.metadata,
